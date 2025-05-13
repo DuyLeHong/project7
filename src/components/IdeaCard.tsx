@@ -4,13 +4,36 @@ import { Idea } from "../types";
 type IdeaCardProps = {
   idea: Idea;
   onClick: () => void;
+  onBookmark: (ideaId: string, isBookmarked: boolean) => void;
+  isBookmarked: boolean;
 };
 
-const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onClick }) => (
+const IdeaCard: React.FC<IdeaCardProps> = ({
+  idea,
+  onClick,
+  onBookmark,
+  isBookmarked,
+}) => (
   <div
-    className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition cursor-pointer overflow-hidden"
+    className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition cursor-pointer overflow-hidden relative"
     onClick={onClick}
   >
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        onBookmark(idea.id, isBookmarked);
+      }}
+      className={`absolute top-3 right-3 w-10 h-10 flex items-center justify-center rounded-full shadow-md transition
+        ${
+          isBookmarked
+            ? "bg-yellow-100 text-yellow-500"
+            : "bg-gray-100 text-gray-400 hover:bg-yellow-50 hover:text-yellow-400"
+        }
+        text-2xl`}
+      title={isBookmarked ? "Bỏ lưu" : "Lưu ý tưởng"}
+    >
+      {isBookmarked ? "★" : "☆"}
+    </button>
     {idea.imageUrl && (
       <img
         src={idea.imageUrl}

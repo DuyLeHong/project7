@@ -1,3 +1,7 @@
+export interface BookmarkedBy {
+  email: string;
+  uid: string;
+}
 export interface Idea {
   id: string;
   title: string;
@@ -7,6 +11,7 @@ export interface Idea {
   votes: number;
   comments: Comment[];
   votedUsers: string[];
+  bookmarkedBy: BookmarkedBy[];
 }
 
 export interface Comment {
